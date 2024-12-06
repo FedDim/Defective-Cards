@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Defective_Cards.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Defective_Cards
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new DefectiveCardsPage());
         }
     }
 }

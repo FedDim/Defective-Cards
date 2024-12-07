@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Defective_Cards.Data
 {
-    internal class AppDatacs
+    public static class AppData
     {
+
     }
 }

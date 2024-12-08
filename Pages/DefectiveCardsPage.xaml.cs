@@ -1,19 +1,7 @@
 ﻿using Defective_Cards.Data;
 using System.Collections.ObjectModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
 
 namespace Defective_Cards.Pages
 {
@@ -25,11 +13,7 @@ namespace Defective_Cards.Pages
         {
             InitializeComponent();
             LimitLoad();
-            Cards = new ObservableCollection<Card>
-            {
-                new Card { Number = "96433078361268504899266604", RejectCode = 0 },
-                new Card { Number = "96433078361268506226301483", RejectCode = 0 }
-            };
+            Cards = CardsLoad(@"..\..\Data\ListOfCards.txt");
 
             CardsDataGrid.ItemsSource = Cards;
 
@@ -40,6 +24,29 @@ namespace Defective_Cards.Pages
         {
             CardNumberTextBox.MaxLength = AppData.TEXTBOX_MAX_LENGTH;
             RejectCodeTextBox.MaxLength = AppData.TEXTBOX_MAX_LENGTH;
+        }
+
+        ObservableCollection<Card> CardsLoad(string filePath)
+        {
+            ObservableCollection<Card> cardsFromFile = new ObservableCollection<Card>();
+
+            using (StreamReader reader = File.OpenText(filePath))
+            {
+                string line;
+                while((line = reader.ReadLine()) != null)
+                {
+                    string[] parts = line.Split('|');
+                    if(parts.Length == 2)
+                    {
+                        string number = parts[0].Trim();
+                        int code = int.Parse(parts[1].Trim());
+
+                        cardsFromFile.Add(new Card(number, code));
+                    }
+                }
+            }
+
+            return cardsFromFile;
         }
 
     }

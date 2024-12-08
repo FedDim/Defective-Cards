@@ -11,5 +11,11 @@ namespace Defective_Cards.Data
         public string Number { get; set; }
 
         public int RejectCode { get; set; }
+
+        public Card(string number, int code)
+        {
+            this.Number = number;
+            this.RejectCode = code;
+        }
     }
 }

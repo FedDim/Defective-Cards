@@ -8,6 +8,6 @@ namespace Defective_Cards.Data
 {
     public static class AppData
     {
-
+        public const int TEXTBOX_MAX_LENGTH = 20;
     }
 }

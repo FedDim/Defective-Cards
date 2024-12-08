@@ -24,6 +24,7 @@ namespace Defective_Cards.Pages
         public DefectiveCardsPage()
         {
             InitializeComponent();
+            LimitLoad();
             Cards = new ObservableCollection<Card>
             {
                 new Card { Number = "96433078361268504899266604", RejectCode = 0 },
@@ -32,6 +33,14 @@ namespace Defective_Cards.Pages
 
             CardsDataGrid.ItemsSource = Cards;
 
+            TotalСards.Text = $"Всего Карт {Cards.Count}";
         }
+
+        void LimitLoad()
+        {
+            CardNumberTextBox.MaxLength = AppData.TEXTBOX_MAX_LENGTH;
+            RejectCodeTextBox.MaxLength = AppData.TEXTBOX_MAX_LENGTH;
+        }
+
     }
 }

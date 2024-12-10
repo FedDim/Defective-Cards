@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Windows;
 
 namespace Defective_Cards.Data
 {
@@ -16,6 +13,41 @@ namespace Defective_Cards.Data
         {
             this.Number = number;
             this.RejectCode = code;
+        }
+
+        public static bool NumberCheck(string number)
+        {
+
+            if (number != "")
+            {
+                string digits = number.Trim().Replace(" ", "");
+
+                if (SessionData.Cards.Any(card => card.Number.Equals(digits)))
+                {
+                    MessageBox.Show("Данный номер Карты уже имеется");
+                    return false;
+                }
+
+                bool algorithmApplicable = digits.All(char.IsDigit) && digits.Reverse()
+                    .Select(c => c - 48)
+                    .Select((thisNum, i) => i % 2 == 0
+                        ? thisNum
+                        : ((thisNum *= 2) > 9 ? thisNum - 9 : thisNum)
+                    ).Sum() % 10 == 0;
+
+                if (!algorithmApplicable)
+                {
+                    MessageBox.Show("Карта введена не верно. Проверьте правильность введенных данных");
+                    return false;
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }

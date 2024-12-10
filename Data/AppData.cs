@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Defective_Cards.Data
+﻿namespace Defective_Cards.Data
 {
     public static class AppData
     {
-        public const int TEXTBOX_MAX_LENGTH = 20;
+        public const int TEXTBOX_MAX_LENGTH = 50;
+
+        public const int IN_STACK = 20;
     }
 }

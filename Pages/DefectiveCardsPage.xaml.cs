@@ -10,7 +10,9 @@ namespace Defective_Cards.Pages
     public partial class DefectiveCardsPage : Page
     {
 
-        bool сardNumberEntered = false, causeCodeEntered = false;
+        bool сardNumberEntered = false, causeCodeEntered = false, isRowSelected = false;
+        int selectedRowIndex;
+
 
         public DefectiveCardsPage()
         {
@@ -22,7 +24,7 @@ namespace Defective_Cards.Pages
 
             Cause.Deserialization_CauseData(ref SessionData.Causes, "CauseData.json");
 
-            informationUpdate(true);
+            InformationUpdate(true);
         }
 
         void LimitLoad()
@@ -31,7 +33,7 @@ namespace Defective_Cards.Pages
             CauseCodeTextBox.MaxLength = AppData.TEXTBOX_MAX_LENGTH;
         }
 
-        void informationUpdate(bool isLoad)
+        void InformationUpdate(bool isLoad)
         {
             TotalСards.Text = $"Всего Карт {SessionData.Cards.Count}";
 
@@ -83,12 +85,23 @@ namespace Defective_Cards.Pages
             {
                 if (сardNumberEntered && causeCodeEntered)
                 {
-                    SessionData.Cards.Add(new Card(CardNumberTextBox.Text.Trim().Replace(" ", ""), Int32.Parse(CauseCodeTextBox.Text)));
-                    CardsDataGrid.ItemsSource = SessionData.Cards;
+                    if (isRowSelected)
+                    {
+                        SessionData.Cards[selectedRowIndex] = new Card(CardNumberTextBox.Text.Trim().Replace(" ", ""), Int32.Parse(CauseCodeTextBox.Text));
+                        ButtonAdd.Content = "Добавить";
+                        ButtonDelete.IsEnabled = true;
+                    }
+                    else
+                    {
+                        SessionData.Cards.Add(new Card(CardNumberTextBox.Text.Trim().Replace(" ", ""), Int32.Parse(CauseCodeTextBox.Text)));
+                        InformationUpdate(false);
+                    }
+
+                    //CardsDataGrid.ItemsSource = SessionData.Cards;
 
                     CardNumberTextBox.Text = CauseCodeTextBox.Text = "";
 
-                    informationUpdate(false);
+
 
                     сardNumberEntered = causeCodeEntered = false;
                     break;
@@ -96,7 +109,7 @@ namespace Defective_Cards.Pages
 
                 if (!сardNumberEntered)
                 {
-                    сardNumberEntered = Card.NumberCheck(CardNumberTextBox.Text);
+                    сardNumberEntered = isRowSelected ? Card.NumberCheck(CardNumberTextBox.Text, selectedRowIndex) : Card.NumberCheck(CardNumberTextBox.Text);
 
                     if (!сardNumberEntered) break;
                 }
@@ -110,6 +123,54 @@ namespace Defective_Cards.Pages
             }
 
             ButtonAdd.IsEnabled = true;
+        }
+
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (isRowSelected)
+            {
+                ButtonAdd.Content = "Редактировать";
+
+                CardNumberTextBox.Text = SessionData.Cards[selectedRowIndex].Number;
+                CauseCodeTextBox.Text = SessionData.Cards[selectedRowIndex].CauseCode.ToString();
+
+                ButtonDelete.IsEnabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Для редактирования данных выберите одну из строк таблицы (Нажмите два раза по нужной Вам строке)");
+            }
+
+        }
+
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (isRowSelected)
+            {
+                MessageBoxResult MessageBoxResult = MessageBox.Show("Вы уверены, что хотите удалить данную строку?", "", MessageBoxButton.YesNo);
+                if (MessageBoxResult == MessageBoxResult.Yes)
+                {
+                    SessionData.Cards.RemoveAt(selectedRowIndex);
+                    InformationUpdate(false);
+                    isRowSelected = false;
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Для удаления данных выберите одну из строк таблицы (Нажмите два раза по нужной Вам строке)");
+            }
+        }
+
+        private void CardsDataGrid_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var dataGrid = sender as DataGrid;
+            if (dataGrid != null && dataGrid.SelectedItem != null)
+            {
+                selectedRowIndex = dataGrid.SelectedIndex;
+                isRowSelected = true;
+                MessageBox.Show("Строка выбрана");
+            }
         }
 
         private void TextBoxDataEntry_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -142,14 +203,15 @@ namespace Defective_Cards.Pages
                     TextBox textBox = (TextBox)sender;
                     if (textBox.Name == "CardNumberTextBox")
                     {
-                        сardNumberEntered = Card.NumberCheck(textBox.Text);
+                        сardNumberEntered = isRowSelected ? Card.NumberCheck(textBox.Text, selectedRowIndex) : Card.NumberCheck(textBox.Text);
+
                     }
                     else if (textBox.Name == "CauseCodeTextBox")
                     {
                         if (!сardNumberEntered)
                         {
                             if (CardNumberTextBox.Text == "") MessageBox.Show("Введите номер карты");
-                            else сardNumberEntered = Card.NumberCheck(CardNumberTextBox.Text);
+                            else сardNumberEntered = isRowSelected ? Card.NumberCheck(CardNumberTextBox.Text, selectedRowIndex) : Card.NumberCheck(CardNumberTextBox.Text);
                         }
 
                         if (сardNumberEntered)

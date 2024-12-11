@@ -55,10 +55,9 @@
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2"
                     Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Height="30" Width="Auto">
                 <!--Временное положение-->
-                <Button Content="Категроии брака" 
+                <Button Content="Категории брака" 
                     Margin="5" MaxHeight="25" 
-                    Background="LightGoldenrodYellow"
-                    Click="GoListOfDefects"/>
+                    Background="LightGoldenrodYellow"/>
             </StackPanel>
 
             <Grid Grid.ColumnSpan="2" Grid.Row="1" 
@@ -97,26 +96,26 @@
         </Grid>
 
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="#f5f5f5">
-            <Button Content="Экспорт в файл" 
+            <Button Name="ButtonExportToFile" Content="Экспорт в файл" 
                     VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,5" Width="Auto"/>
-            <Button Content="Редактировать"
-                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,5" Width="Auto"/>
-            <Button Content="Удалить"
-                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="110,0,0,5" Width="Auto"/>
+            <Button Name="ButtonEdit" Content="Редактировать"
+                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,5" Width="Auto" Click="ButtonEdit_Click"/>
+            <Button Name="ButtonDelete" Content="Удалить"
+                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="110,0,0,5" Width="Auto" Click="ButtonDelete_Click"/>
         </Grid>
 
         <!--Список введенных карт-->
         <DataGrid x:Name="CardsDataGrid" Grid.Row="1" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" 
                   AutoGenerateColumns="False"
-                  Background="#F8F8FF">
+                  Background="#F8F8FF" MouseLeftButtonDown="CardsDataGrid_MouseLeftButtonDown">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Номер карты" 
                                     Width="*" 
                                     Binding="{Binding Number}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Код брака" 
                                     Width="*" 
-                                    Binding="{Binding RejectCode}" IsReadOnly="True" />
+                                    Binding="{Binding CauseCode}" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

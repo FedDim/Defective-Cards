@@ -1,7 +1,6 @@
-﻿using Defective_Cards.Data;
+﻿using Defective_Cards.AppSystem;
+using Defective_Cards.Data;
 using System;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -18,7 +17,7 @@ namespace Defective_Cards.Pages
         {
             InitializeComponent();
             LimitLoad();
-            SessionData.Cards = CardsLoad(@"..\..\Data\ListOfCards.txt");
+            SessionData.Cards = WorkWithTXT.CardsLoad();
 
             CardsDataGrid.ItemsSource = SessionData.Cards;
 
@@ -46,37 +45,6 @@ namespace Defective_Cards.Pages
             NumberOfStacks.Text = $"Количество стопок {SessionData.StacksCount}";
         }
 
-        ObservableCollection<Card> CardsLoad(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                File.Create(filePath).Dispose();
-                return new ObservableCollection<Card>();
-            }
-
-            ObservableCollection<Card> cardsFromFile = new ObservableCollection<Card>();
-
-            using (StreamReader reader = File.OpenText(filePath))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] parts = line.Split('|');
-                    if (parts.Length == 2)
-                    {
-                        string number = parts[0].Trim();
-                        int code = int.Parse(parts[1].Trim());
-
-                        cardsFromFile.Add(new Card(number, code));
-                    }
-                }
-            }
-
-            return cardsFromFile;
-
-
-        }
-
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             ButtonAdd.IsEnabled = false;
@@ -88,21 +56,18 @@ namespace Defective_Cards.Pages
                     if (isRowSelected)
                     {
                         SessionData.Cards[selectedRowIndex] = new Card(CardNumberTextBox.Text.Trim().Replace(" ", ""), Int32.Parse(CauseCodeTextBox.Text));
+                        WorkWithTXT.Edit(selectedRowIndex);
                         ButtonAdd.Content = "Добавить";
                         ButtonDelete.IsEnabled = true;
                     }
                     else
                     {
                         SessionData.Cards.Add(new Card(CardNumberTextBox.Text.Trim().Replace(" ", ""), Int32.Parse(CauseCodeTextBox.Text)));
+                        WorkWithTXT.Add();
                         InformationUpdate(false);
                     }
 
-                    //CardsDataGrid.ItemsSource = SessionData.Cards;
-
                     CardNumberTextBox.Text = CauseCodeTextBox.Text = "";
-
-
-
                     сardNumberEntered = causeCodeEntered = false;
                     break;
                 }
@@ -151,6 +116,7 @@ namespace Defective_Cards.Pages
                 if (MessageBoxResult == MessageBoxResult.Yes)
                 {
                     SessionData.Cards.RemoveAt(selectedRowIndex);
+                    AppSystem.WorkWithTXT.Remove(selectedRowIndex);
                     InformationUpdate(false);
                     isRowSelected = false;
                 }
@@ -160,6 +126,11 @@ namespace Defective_Cards.Pages
             {
                 MessageBox.Show("Для удаления данных выберите одну из строк таблицы (Нажмите два раза по нужной Вам строке)");
             }
+        }
+
+        private void ButtonExportToFile_Click(object sender, RoutedEventArgs e)
+        {
+            WorkWithTXT.ExportToFile();
         }
 
         private void CardsDataGrid_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

@@ -66,6 +66,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppSystem\WorkWithTXT.cs" />
     <Compile Include="Data\AppData.cs" />
     <Compile Include="Data\Card.cs" />
     <Compile Include="Data\Cause.cs" />

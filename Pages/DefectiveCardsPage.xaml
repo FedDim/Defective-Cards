@@ -97,7 +97,7 @@
 
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="#f5f5f5">
             <Button Name="ButtonExportToFile" Content="Экспорт в файл" 
-                    VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,5" Width="Auto"/>
+                    VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,5" Width="Auto" Click="ButtonExportToFile_Click"/>
             <Button Name="ButtonEdit" Content="Редактировать"
                     VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,5" Width="Auto" Click="ButtonEdit_Click"/>
             <Button Name="ButtonDelete" Content="Удалить"

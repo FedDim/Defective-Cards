@@ -25,11 +25,11 @@
          x:Name="StartFromNum"
          VerticalAlignment="Top" HorizontalAlignment="Right" MaxLength="20" Height="Auto" Width="100" Margin="0,196,285,0"
          FontSize="20"
-         Background="#F8F8FF"/>
+         Background="#F8F8FF" KeyDown="StartFromNum_KeyDown"/>
 
-        <Button Grid.Row="1"
+        <Button x:Name="ButtonStart" Grid.Row="1"
             Content="Начать" FontSize="20"
-            Margin="0,0,0,70" MaxHeight="40" Width="90"
+            Margin="0,0,0,70" MaxHeight="40" Width="90" Click="ButtonStart_Click"
             />
     </Grid>
 </Page>

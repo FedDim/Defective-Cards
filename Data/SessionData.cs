@@ -8,7 +8,8 @@ namespace Defective_Cards.Data
 
         public static ObservableCollection<Cause> Causes { get; set; }
 
-
         public static int StacksCount { get; set; } = 0;
+
+        public static int NumberOfCardsPerSession { get; set; } = 0;
     }
 }

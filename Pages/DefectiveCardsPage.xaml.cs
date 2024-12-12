@@ -36,9 +36,10 @@ namespace Defective_Cards.Pages
         {
             TotalСards.Text = $"Всего Карт {SessionData.Cards.Count}";
 
-            if (SessionData.Cards.Count / AppData.IN_STACK - SessionData.StacksCount == 1)
+            if (SessionData.NumberOfCardsPerSession == 20)
             {
                 SessionData.StacksCount++;
+                SessionData.NumberOfCardsPerSession = 0;
                 if (!isLoad) MessageBox.Show("Новая стопка готова");
             }
 
@@ -64,6 +65,7 @@ namespace Defective_Cards.Pages
                     {
                         SessionData.Cards.Add(new Card(CardNumberTextBox.Text.Trim().Replace(" ", ""), Int32.Parse(CauseCodeTextBox.Text)));
                         WorkWithTXT.Add();
+                        SessionData.NumberOfCardsPerSession++;
                         InformationUpdate(false);
                     }
 
@@ -117,6 +119,7 @@ namespace Defective_Cards.Pages
                 {
                     SessionData.Cards.RemoveAt(selectedRowIndex);
                     AppSystem.WorkWithTXT.Remove(selectedRowIndex);
+                    if (SessionData.NumberOfCardsPerSession > 0) SessionData.NumberOfCardsPerSession--;
                     InformationUpdate(false);
                     isRowSelected = false;
                 }

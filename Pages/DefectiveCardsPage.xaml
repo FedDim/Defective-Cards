@@ -55,9 +55,9 @@
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2"
                     Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Height="30" Width="Auto">
                 <!--Временное положение-->
-                <Button Content="Категории брака" 
+                <Button Name="ButtonCauseCategories" Content="Категории брака" 
                     Margin="5" MaxHeight="25" 
-                    Background="LightGoldenrodYellow"/>
+                    Background="LightGoldenrodYellow" Click="ButtonCauseCategories_Click"/>
             </StackPanel>
 
             <Grid Grid.ColumnSpan="2" Grid.Row="1" 
@@ -92,7 +92,7 @@
                         Content="Добавить" x:Name="ButtonAdd" MaxHeight="25" 
                         Click="ButtonAdd_Click"/>
             </Grid>
-            
+
         </Grid>
 
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="#f5f5f5">

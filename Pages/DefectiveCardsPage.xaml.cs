@@ -21,7 +21,7 @@ namespace Defective_Cards.Pages
 
             CardsDataGrid.ItemsSource = SessionData.Cards;
 
-            Cause.Deserialization_CauseData(ref SessionData.Causes, "CauseData.json");
+            SessionData.Causes = WorkWithCausesJSON.CausesLoad();
 
             InformationUpdate(true);
         }
@@ -131,6 +131,11 @@ namespace Defective_Cards.Pages
         private void ButtonExportToFile_Click(object sender, RoutedEventArgs e)
         {
             WorkWithTXT.ExportToFile();
+        }
+
+        private void ButtonCauseCategories_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ListOfDefectCategories());
         }
 
         private void CardsDataGrid_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

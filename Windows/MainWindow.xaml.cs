@@ -1,18 +1,7 @@
-﻿using Defective_Cards.Pages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Defective_Cards.AppSystem;
+using Defective_Cards.Data;
+using Defective_Cards.Pages;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Defective_Cards
 {
@@ -25,6 +14,11 @@ namespace Defective_Cards
         {
             InitializeComponent();
             MainFrame.Navigate(new DefectiveCardsPage());
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            WorkWithCausesJSON.Serialization_CauseData(SessionData.Causes, "CauseData.json");
         }
     }
 }

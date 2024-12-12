@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Defective_Cards.Data
 {
@@ -7,7 +6,8 @@ namespace Defective_Cards.Data
     {
         public static ObservableCollection<Card> Cards { get; set; }
 
-        public static List<Cause> Causes;
+        public static ObservableCollection<Cause> Causes { get; set; }
+
 
         public static int StacksCount { get; set; } = 0;
     }

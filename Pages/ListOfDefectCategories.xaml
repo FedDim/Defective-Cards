@@ -31,15 +31,15 @@
         <!-- Панель с кнопками для действий над записями -->
         <StackPanel Grid.Row="2" 
                 Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0">
-            <Button Name="ButtonAdd" Content="Добавить" Margin="5,0,0,10"/>
-            <Button Name="ButtonEdit" Content="Редактировать" Margin="5,0,0,10"/>
+            <Button Name="ButtonAdd" Content="Добавить" Margin="5,0,0,10" Click="ButtonAdd_Click"/>
+            <Button Name="ButtonEdit" Content="Редактировать" Margin="5,0,0,10" Click="ButtonEdit_Click"/>
             <Button Name="ButtonDelete" Content="Удалить" Margin="5,0,0,10" Click="ButtonDelete_Click"/>
         </StackPanel>
 
         <StackPanel x:Name="CausePanel"
                     Grid.Row="1"
                     Height="50"
-                    Visibility="Collapsed">
+                    Visibility="Hidden">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -57,7 +57,7 @@
                 <TextBox Grid.Column="1" Grid.Row="0" 
                          x:Name="DefectNumberTextBox" 
                          FontSize="20" Height="Auto" MaxLength="100" Width="Auto"
-                         Background="#F8F8FF"/>
+                         Background="#F8F8FF" KeyDown="DefectNumberTextBox_KeyDown"/>
 
                 <TextBlock Grid.Column="2" Grid.Row="0" 
                            Text="Описание" 
@@ -65,12 +65,12 @@
                 <TextBox Grid.Column="3" Grid.Row="0"
                          x:Name="RejectCodeTextBox" 
                          FontSize="20" Height="Auto" MaxLength="300" Width="Auto" Margin="0,0,10,0"
-                         Background="#F8F8FF"/>
+                         Background="#F8F8FF" KeyDown="RejectCodeTextBox_KeyDown"/>
 
                 <Button Name="AddDefectButton"
                         Grid.ColumnSpan="4" Grid.Row="1" 
                         Content="Добавить"
-                        MaxHeight="25"/>
+                        MaxHeight="25" Click="AddDefectButton_Click"/>
             </Grid>
         </StackPanel>
 

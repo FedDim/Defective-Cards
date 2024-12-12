@@ -38,16 +38,15 @@ namespace Defective_Cards.AppSystem
             }
         }
 
-        public static void Serialization_CauseData(List<Cause> causes, string name)
+        public static void Serialization_CauseData(ObservableCollection<Cause> causes, string name)
         {
             try
             {
                 File.WriteAllText(name, JsonConvert.SerializeObject(causes));
-                MessageBox.Show("Данные сохранены");
             }
             catch
             {
-                MessageBox.Show("Ошибка");
+                MessageBox.Show("Ошибка сериализации");
             }
         }
 

@@ -33,8 +33,19 @@ namespace Defective_Cards.AppSystem
             }
             catch
             {
-                MessageBox.Show($"Файл {name} не обнаружен");
-                //Возможность создания файла
+                MessageBoxResult messageBoxResult = MessageBox.Show($"Файл {name} не обнаружен, хотите использовать даннные по-умолчанию?", "", MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    causes = new List<Cause>()
+                    {
+                        new Cause(1, "Механические повреждения"),
+                        new Cause(2, "Электронный сбой"),
+                        new Cause(3, "Ошибки при записи данных"),
+                        new Cause(4, "Истечение срока годности"),
+                        new Cause(5, "Проблемы с программным обеспечением")
+                    };
+                }
+                else MessageBox.Show("Без этих данных программа будет работать не корректно!");
             }
         }
 

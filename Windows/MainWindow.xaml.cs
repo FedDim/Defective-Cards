@@ -17,10 +17,20 @@ namespace Defective_Cards
             switch (messageBoxResult)
             {
                 case MessageBoxResult.Yes:
+                    Left = (SystemParameters.PrimaryScreenWidth / 2) - (Width / 2);
+                    Top = (SystemParameters.PrimaryScreenHeight / 2) - (Height / 2);
                     MainFrame.Navigate(new StartPage());
                     break;
                 case MessageBoxResult.No:
-                    MainFrame.Navigate(new DefectiveCardsPage());
+                    var window = Application.Current.MainWindow as MainWindow;
+
+                    if (window != null)
+                    {
+                        window.WindowState = WindowState.Maximized;
+
+                        MainFrame.Navigate(new DefectiveCardsPage());
+                    }
+
                     break;
                 default:
                     MainFrame.Navigate(new DefectiveCardsPage());

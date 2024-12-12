@@ -13,7 +13,20 @@ namespace Defective_Cards
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new DefectiveCardsPage());
+            MessageBoxResult messageBoxResult = MessageBox.Show("Начать с определённого номера стопки? (Нет — начнём с 0)", "", MessageBoxButton.YesNo);
+            switch (messageBoxResult)
+            {
+                case MessageBoxResult.Yes:
+                    MainFrame.Navigate(new StartPage());
+                    break;
+                case MessageBoxResult.No:
+                    MainFrame.Navigate(new DefectiveCardsPage());
+                    break;
+                default:
+                    MainFrame.Navigate(new DefectiveCardsPage());
+                    break;
+            }
+
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

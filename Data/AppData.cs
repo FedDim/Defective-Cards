@@ -6,6 +6,6 @@
 
         public const int IN_STACK = 20;
 
-        public const string LISTOFCARDS_FILEPATH = @"..\..\Data\ListOfCards.txt";
+        public static string LISTOFCARDS_FILEPATH;
     }
 }

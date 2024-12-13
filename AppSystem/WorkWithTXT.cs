@@ -12,6 +12,8 @@ namespace Defective_Cards.AppSystem
     {
         public static ObservableCollection<Card> CardsLoad()
         {
+            AppData.LISTOFCARDS_FILEPATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ListOfCards.txt");
+
             if (!File.Exists(AppData.LISTOFCARDS_FILEPATH))
             {
                 File.Create(AppData.LISTOFCARDS_FILEPATH).Dispose();
